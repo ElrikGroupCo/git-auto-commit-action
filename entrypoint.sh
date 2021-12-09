@@ -7,6 +7,12 @@ if "$INPUT_DISABLE_GLOBBING"; then
 fi
 
 _main() {
+    echo "GIVEN: ib=$INPUT_BRANCH or ghw=$GITHUB_WORKSPACE or ghr=$GITHUB_HEAD_REF";
+    INPUT_BRANCH="${GITHUB_HEAD_REF:-${GITHUB_REF}}";
+    [ -z "$INPUT_BRANCH" ]; exit 666;
+    export INPUT_BRANCH="refs/heads/${INPUT_BRANCH}";
+    echo "INPUT_BRANCH value: ${INPUT_BRANCH}";
+
     _switch_to_repository
 
     if _git_is_dirty || "$INPUT_SKIP_DIRTY_CHECK"; then
@@ -45,7 +51,6 @@ _git_is_dirty() {
 }
 
 _switch_to_branch() {
-    echo "INPUT_BRANCH value: $INPUT_BRANCH or $GITHUB_WORKSPACE or $GITHUB_HEAD_REF";
 
     # Fetch remote to make sure that repo can be switched to the right branch.
 
@@ -58,7 +63,7 @@ _switch_to_branch() {
     # Switch to branch from current Workflow run
     # shellcheck disable=SC2086
     cd "${GITHUB_WORKSPACE}"
-    git checkout "${GITHUB_HEAD_REF:-${GITHUB_REF}}";
+    git checkout "${INPUT_BRANCH}";
 }
 
 _add_files() {
