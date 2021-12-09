@@ -58,7 +58,7 @@ _switch_to_branch() {
 
     # Switch to branch from current Workflow run
     # shellcheck disable=SC2086
-    git checkout refs/heads/$INPUT_BRANCH;
+    git checkout $INPUT_BRANCH;
 }
 
 _add_files() {
@@ -125,7 +125,7 @@ _push_to_github() {
 
     else
         echo "::debug::Push commit to remote branch $INPUT_BRANCH";
-        git push --set-upstream origin "HEAD:refs/heads/$INPUT_BRANCH" --follow-tags --atomic ${INPUT_PUSH_OPTIONS:+"${INPUT_PUSH_OPTIONS_ARRAY[@]}"};
+        git push --set-upstream origin "HEAD:$INPUT_BRANCH" --follow-tags --atomic ${INPUT_PUSH_OPTIONS:+"${INPUT_PUSH_OPTIONS_ARRAY[@]}"};
     fi
 }
 
