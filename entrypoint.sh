@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -eu
+set -eux
 
 if "$INPUT_DISABLE_GLOBBING"; then
     set -o noglob;
@@ -57,7 +57,8 @@ _switch_to_branch() {
 
     # Switch to branch from current Workflow run
     # shellcheck disable=SC2086
-    git checkout "${GITHUB_HEAD_REF}";
+    cd "${GITHUB_WORKSPACE}"
+    git checkout "${GITHUB_HEAD_REF:-${GITHUB_REF}}";
 }
 
 _add_files() {
