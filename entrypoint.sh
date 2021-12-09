@@ -33,7 +33,6 @@ _main() {
 
 _switch_to_repository() {
     echo "🥴"
-    echo "INPUT_REPOSITORY value: $INPUT_REPOSITORY";
     cd "${GITHUB_WORKSPACE}";
 }
 
@@ -46,7 +45,7 @@ _git_is_dirty() {
 }
 
 _switch_to_branch() {
-    echo "INPUT_BRANCH value: $INPUT_BRANCH";
+    echo "INPUT_BRANCH value: $INPUT_BRANCH or $GITHUB_WORKSPACE or $GITHUB_HEAD_REF";
 
     # Fetch remote to make sure that repo can be switched to the right branch.
 
@@ -58,7 +57,7 @@ _switch_to_branch() {
 
     # Switch to branch from current Workflow run
     # shellcheck disable=SC2086
-    git checkout $INPUT_BRANCH;
+    git checkout "${GITHUB_HEAD_REF}";
 }
 
 _add_files() {
