@@ -8,9 +8,8 @@ fi
 
 _main() {
     echo "GIVEN: ib=$INPUT_BRANCH or ghw=$GITHUB_WORKSPACE or ghr=$GITHUB_HEAD_REF";
-    INPUT_BRANCH="${GITHUB_HEAD_REF:-${GITHUB_REF}}";
+    export INPUT_BRANCH="${GITHUB_HEAD_REF:-${GITHUB_REF}}";
     if [ -z "$INPUT_BRANCH" ]; then exit 666;fi
-    export INPUT_BRANCH="refs/heads/${INPUT_BRANCH}";
     echo "INPUT_BRANCH value: ${INPUT_BRANCH}";
 
     _switch_to_repository
