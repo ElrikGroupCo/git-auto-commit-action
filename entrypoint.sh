@@ -32,8 +32,9 @@ _main() {
 
 
 _switch_to_repository() {
+    echo "🥴"
     echo "INPUT_REPOSITORY value: $INPUT_REPOSITORY";
-    cd "$INPUT_REPOSITORY";
+    cd "${GITHUB_WORKSPACE}";
 }
 
 _git_is_dirty() {
